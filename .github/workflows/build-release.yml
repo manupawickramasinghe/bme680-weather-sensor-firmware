@@ -1,4 +1,7 @@
 name: Build and Release
+permissions:
+  contents: write
+
 on:
   push:
     branches:
@@ -14,7 +17,7 @@ jobs:
     steps:
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -35,7 +38,7 @@ jobs:
         target: [esp32, esp32c3, esp32c6, esp32s3, esp32s2]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           # Ensure that git submodules are also checked out.
           submodules: recursive
@@ -71,7 +74,7 @@ jobs:
 
       # This step uploads the compiled binary files as assets to the GitHub Release.
       - name: Upload Release Assets
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
